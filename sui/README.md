@@ -82,6 +82,9 @@ cd /data/sui
 git checkout mainnet
 ```
 
+note: Suggest to use a separated data ebs node to hold sui 
+
+
 ## configure sui full node mainnet
 
 ```
