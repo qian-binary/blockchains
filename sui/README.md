@@ -5,38 +5,53 @@
 - devnet => Sui Devnet network
 - testnet => Sui Testnet network
 - mainnet => SUi Mainnet network
-- main: 最近变化和更新
+- main: recent changes and updates
 
-## Sui支持的OS
+## OS support for sui
 
-- Linux - Ubuntu version 20.04 (Bionic Beaver)
+- **Linux - Ubuntu version 20.04 (Bionic Beaver)**
 - macOS - macOS Monterey
 - Microsoft Windows - Windows 11
 
-## 依赖库和工具
+## AWS EC2 instance type choise
 
-| 库/工具          | Linux | Mac | Windows |
-|-----------------|:-----:|----:|--------:|
-| cURL            | x     | x   | x       |
-| Rust and Cargo  | x     | x   | x       |
-| Git CLI         | x     | x   | x       |
-| GCC             | x     | x   | x       |
-| libssl-dev      | x     |     |         |
-| libclang-dev    | x     |     |         |
-| libpq-dev       | x     |     |         |
-| build-essential | x     |     |         |
-| Brew            |       | x   |         |
-| C++ build tools |       |     | x       |
-| LLVM Compiler   |       |     | x       |
+### official recommendation 
 
-## 安装rust
+- CPUs: 8 physical cores / 16 vCPUs
+- RAM: 128 GB
+- Storage (SSD): 2 TB NVMe drive
+
+### testing ec2 instance types with Linux
+
+Tested on 2 instance types m6g.4xlarge(same spec with official recommendation) and m6g.large(2CPU, 16GB), 
+
+both are working, although m6g.large need more time to setup and catch up.
+
+
+## dependencies & tools
+
+| dependencies/tools | Linux | Mac | Windows |
+|--------------------|:-----:|----:|--------:|
+| cURL               | x     | x   | x       |
+| Rust and Cargo     | x     | x   | x       |
+| Git CLI            | x     | x   | x       |
+| GCC                | x     | x   | x       |
+| libssl-dev         | x     |     |         |
+| libclang-dev       | x     |     |         |
+| libpq-dev          | x     |     |         |
+| build-essential    | x     |     |         |
+| Brew               |       | x   |         |
+| C++ build tools    |       |     | x       |
+| LLVM Compiler      |       |     | x       |
+
+## Install rust
 
 ```
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 source "$HOME/.cargo/env"
 ```
 
-## 安装依赖库和工具
+## Install dependencies & tools
 
 ```
 sudo apt update \
@@ -58,14 +73,16 @@ sudo apt update \
     clang 
 ```
 
-## 下载sui git repository（需要有github的账号）
+## download sui git repository
+```
 mkdir -p /data
 cd /data
 git clone https://github.com/MystenLabs/sui.git
 cd /data/sui
 git checkout mainnet
+```
 
-## 配置sui full node mainnet
+## configure sui full node mainnet
 
 ```
 cp crates/sui-config/data/fullnode-template.yaml fullnode.yaml
@@ -97,8 +114,14 @@ EOF
 
 ```
 
-## 安装sui node
+## install sui node
 ``` 
 cargo run --release --bin sui-node -- --config-path fullnode.yaml
 ```
 
+After run the command, the sui node starts to syncing with mainnet node.
+
+
+## setup in one script
+
+You also can run 
